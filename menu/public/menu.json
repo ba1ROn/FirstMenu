@@ -1,0 +1,19 @@
+{
+    "menu": [
+        {
+            "menuAccess": "all",
+            "menuContent": "Procucts",
+            "menuPos": 1
+        },
+    {
+            "menuAccess": "all",
+            "menuContent": "Orders",
+            "menuPos": 2
+        },
+    {
+            "menuAccess": "all",
+            "menuContent": "Cart",
+            "menuPos": 3
+        }
+    ]
+}
