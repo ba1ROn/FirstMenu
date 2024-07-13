@@ -1,33 +1,27 @@
 .menu-container {
-    position: fixed; /* Фиксированное позиционирование */
-    top: 0; /* Прикрепляем к верхней части экрана */
-    left: 0;
-    width: 100%; /* Занимаем всю ширину экрана */
-    background-color: #333333; /* Цвет фона меню */
-  }
-  
-  /* Стили для списка */
-  .menu {
-    list-style-type: none; /* Убираем маркеры у списка */
-    margin: 0;
-    padding: 0;
-    display: flex; /* Используем flexbox для выравнивания элементов */
-    justify-content: flex-start; /* Выравнивание элементов по началу контейнера */
-  }
-  
-  /* Стили для элементов списка */
-  .menu li {
-    padding: 20px 20px; /* Внутренние отступы для элементов списка */
-  }
-  
-  /* Стили для ссылок */
-  .menu li a {
-    text-decoration: none; /* Убираем подчеркивание у ссылок */
-    color: white; /* Цвет текста */
-  }
-  
-  /* Стили при наведении */
-  .menu li:hover {
-    background-color: #555; /* Изменение фона при наведении на элемент списка */
-  }
-  
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #333;
+}
+
+.menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.menu li {
+  padding: 20px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+}
+
+.menu li:hover {
+  background-color: #555;
+}
