@@ -1,27 +1,84 @@
-.menu-container {
+
+
+/* Стили для верхнего меню */
+.TopMenu {
+  width: 100%; 
   position: fixed;
   top: 0;
-  width: 100%;
-  background-color: #333;
+  left: 0; 
+  background-color: #333; 
+  border-bottom: 1px solid #444; 
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 1000;
 }
 
-.menu {
-  list-style-type: none;
-  margin: 0;
+.TopMenu ul {
+  list-style: none;
   padding: 0;
+  margin: 0;
   display: flex;
-  justify-content: flex-start;
+  gap: 10px;
 }
 
-.menu li {
+.TopMenu li {
+  padding: 8px 12px; 
+  cursor: pointer;
+  color: #fff; 
+  transition: background-color 0.3s ease;
+}
+
+.TopMenu li:hover {
+  background-color: #555; 
+}
+
+/* Стили для бокового меню */
+.SideMenu {
+  width: 250px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  background-color: #222; 
+  border-left: 1px solid #444; 
   padding: 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+  transform: translateX(100%); /* Изначально скрыто */
 }
 
-.menu a {
-  text-decoration: none;
-  color: white;
+.SideMenu.visible {
+  transform: translateX(0); 
 }
 
-.menu li:hover {
-  background-color: #555;
+.SideMenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.SideMenu li {
+  padding: 10px 15px;
+  margin-bottom: 5px; 
+  border-bottom: 1px solid #444; 
+  background-color: #333; 
+  color: #fff; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.SideMenu li:last-child {
+  border-bottom: none; 
+}
+
+.SideMenu li:hover {
+  background-color: #555; 
+}
+
+
+h1 {
+  font-size: 24px;
+  color: #fff; 
+  margin: 0;
 }

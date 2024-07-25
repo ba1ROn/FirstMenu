@@ -1,19 +1,20 @@
-import React  from 'react';
-import CodeMenu from './CodeMenu.json'
-import './Style.css'; 
+import React from 'react';
+import './Style.css';
 
-const Menu = () => {
-    const menuItems = CodeMenu.menu;
-        return(
-            <div className='menu-container'>
-                <ul className='menu'>
-                    {menuItems.map((el) => (
-                        <li key={el}>
-                            <a href='#'>{el.menuContent}</a>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        )
+
+function TopMenu({ menuItems, onMenuClick }) {
+    return(
+        <div className='TopMenu'>
+            <ul>
+                {menuItems.map(el => (
+                    <li onClick={() => onMenuClick(el.id)}>
+                        {el.menuContent}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+
 }
-export default Menu;
+
+export default TopMenu;
