@@ -3,7 +3,7 @@ import TopMenu from './menu';
 import SideMenu from './secondMenu';
 import './Style.css';
 
-// Данные верхнего меню
+
 const topMenuData = {
   menu: [
     { id: 1, menuContent: "Products" },
@@ -13,7 +13,7 @@ const topMenuData = {
   ]
 };
 
-// Данные бокового меню
+
 const sideMenuData = {
   sideMenu: [
     { category: "Cloths", parentId: 1 },
@@ -28,16 +28,16 @@ const sideMenuData = {
 };
 
 function App() {
-  const [selectedMenuId, setSelectedMenuId] = useState(null); // Состояние для выбранного меню
-  const [isSideMenuVisible, setIsSideMenuVisible] = useState(false); // Состояние для видимости бокового меню
+  const [selectedMenuId, setSelectedMenuId] = useState(null); 
+  const [isSideMenuVisible, setIsSideMenuVisible] = useState(false); 
 
-  // Функция-обработчик для клика по элементу верхнего меню
+ 
   const handleMenuClick = (id) => {
-    setSelectedMenuId(id); // Устанавливаем выбранный ID меню
-    setIsSideMenuVisible(true); // Показываем боковое меню
+    setSelectedMenuId(id); 
+    setIsSideMenuVisible(true); 
   };
 
-  // Фильтруем элементы бокового меню по выбранному ID верхнего меню
+ 
   const filteredSideMenuItems = sideMenuData.sideMenu.filter(item => item.parentId === selectedMenuId);
 
   return (
