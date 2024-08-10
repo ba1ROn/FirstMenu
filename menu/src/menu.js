@@ -1,20 +1,24 @@
+// components/TopMenu.js
 import React from 'react';
-import './Style.css';
 
+function TopMenu({ items = [], onClick }) {
+  if (!Array.isArray(items)) {
+    return <p>Error: Items are not an array.</p>;
+  }
 
-function TopMenu({ menuItems, onMenuClick }) {
-    return(
-        <div className='TopMenu'>
-            <ul>
-                {menuItems.map(el => (
-                    <li onClick={() => onMenuClick(el.id)}>
-                        {el.menuContent}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    )
-
+  return (
+    <div className="top-menu">
+      {items.length > 0 ? (
+        items.map(item => (
+          <button key={item.id} onClick={() => onClick(item.id)}>
+            {item.name}
+          </button>
+        ))
+      ) : (
+        <p>No menu items available</p>
+      )}
+    </div>
+  );
 }
 
 export default TopMenu;

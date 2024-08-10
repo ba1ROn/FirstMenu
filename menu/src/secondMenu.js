@@ -1,20 +1,25 @@
+// components/SideMenu.js
 import React from 'react';
-import './Style.css';
 
+function SideMenu({ items = [] }) {
+  if (!Array.isArray(items)) {
+    return <p>Error: Items are not an array.</p>;
+  }
 
-function SideMenu({ sideMenuItems, isVisible }) {
-    const style = isVisible ? "SideMenu visible" : "SideMenu";
-        return(
-            <div className={style}>
-                <ul>
-                    {sideMenuItems.map(el=>(
-                        <li>
-                            {el.category}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        )
+  return (
+    <div className="side-menu">
+      {items.length > 0 ? (
+        items.map(item => (
+          <div key={item.id}>
+            <h4>{item.name}</h4>
+            {/* Можно добавить дополнительную информацию о пункте бокового меню */}
+          </div>
+        ))
+      ) : (
+        <p>No side menu items available</p>
+      )}
+    </div>
+  );
 }
 
 export default SideMenu;

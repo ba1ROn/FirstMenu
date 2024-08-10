@@ -1,49 +1,55 @@
-import React, { useState } from 'react';
+// App.js
+import React, { useState, useEffect } from 'react';
 import TopMenu from './menu';
 import SideMenu from './secondMenu';
-import './Style.css';
 
+// Функция для получения данных верхнего меню
+async function fetchTopMenu() {
+  try {
+    const response = await fetch('http://localhost:5000/api/Menu/mainmenu');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch top menu data:', error);
+    return [];
+  }
+}
 
-const topMenuData = {
-  menu: [
-    { id: 1, menuContent: "Products" },
-    { id: 2, menuContent: "Orders" },
-    { id: 3, menuContent: "Cart" },
-    { id: 4, menuContent: "OrderInfo" },
-  ]
-};
-
-
-const sideMenuData = {
-  sideMenu: [
-    { category: "Cloths", parentId: 1 },
-    { category: "Shoes", parentId: 1 },
-    { category: "Kids", parentId: 1 },
-    { category: "Current Orders", parentId: 2 },
-    { category: "Closed Orders", parentId: 2 },
-    { category: "All Orders", parentId: 2 },
-    { category: "Cart", parentId: 3 },
-    { category: "OrderInfo", parentId: 4 }
-  ]
-};
+// Функция для получения данных бокового меню
+async function fetchSideMenu(id) {
+  try {
+    const response = await fetch(`http://localhost:5000/api/Menu/getSubMenu?id=${id}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Failed to fetch side menu data:', error);
+    return [];
+  }
+}
 
 function App() {
-  const [selectedMenuId, setSelectedMenuId] = useState(null); 
-  const [isSideMenuVisible, setIsSideMenuVisible] = useState(false); 
+  const [topMenu, setTopMenu] = useState([]);
+  const [sideMenu, setSideMenu] = useState([]);
 
- 
-  const handleMenuClick = (id) => {
-    setSelectedMenuId(id); 
-    setIsSideMenuVisible(true); 
+  useEffect(() => {
+    fetchTopMenu().then(data => setTopMenu(data));
+  }, []);
+
+  const handleTopMenuClick = async (id) => {
+    const data = await fetchSideMenu(id);
+    setSideMenu(data);
   };
 
- 
-  const filteredSideMenuItems = sideMenuData.sideMenu.filter(item => item.parentId === selectedMenuId);
-
   return (
-    <div>
-      <TopMenu menuItems={topMenuData.menu} onMenuClick={handleMenuClick} />
-      <SideMenu sideMenuItems={filteredSideMenuItems} isVisible={isSideMenuVisible} />
+    <div className="app">
+      <TopMenu items={topMenu} onClick={handleTopMenuClick} />
+      <SideMenu items={sideMenu} />
     </div>
   );
 }
