@@ -1,72 +1,57 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
-import './Style.css'; // Импорт стилей
+import './Style.css';  // Импортируйте CSS файл
 
 const App = () => {
-  const [topMenuData, setTopMenuData] = useState([]);
-  const [sideMenuData, setSideMenuData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [topMenuItems, setTopMenuItems] = useState([]);
+  const [sideMenuItems, setSideMenuItems] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
 
-  // Получение данных для верхнего меню
+  // Функция для загрузки данных верхнего меню
   useEffect(() => {
-    const fetchTopMenuData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/Menu/mainmenu');
+    fetch('http://localhost:5000/api/Menu/mainmenu')
+      .then(response => response.json())
+      .then(data => setTopMenuItems(data))}, []);
+
+  // Функция для обработки кликов по верхнему меню
+  const handleTopMenuClick = (id) => {
+    setSelectedId(id); // Установите выбранный ID
+
+    fetch('http://localhost:5000/api/Menu/getSubMenu', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      },
+      body: JSON.stringify({ parentID: id }) // Отправляем данные в теле запроса
+    })
+      .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        const result = await response.json();
-        setTopMenuData(result);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTopMenuData();
-  }, []);
-
-  // Обработка клика по элементу верхнего меню
-  const handleMenuClick = async (parentId) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`http://localhost:5000/api/Menu/getSubMenu?parentID=${parentId}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
-      setSideMenuData(result);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+        return response.json();
+      })
+      .then(data => setSideMenuItems(data)) };
 
   return (
     <div>
-      <div className="menu">
-        {topMenuData.map((item) => (
+      <div className="top-menu">
+        {topMenuItems.map(item => (
           <button
-            key={item.id} // Убедитесь, что `id` уникален
-            className="menu-button"
-            onClick={() => handleMenuClick(item.id)} // Передаем id в обработчик
+            key={item.id}
+            onClick={() => handleTopMenuClick(item.id)}
+            title={item.description}  // Добавьте описание как всплывающую подсказку
           >
-            {item.name} {/* Предполагается, что у каждого объекта есть свойство `name` */}
+            {item.name}
           </button>
         ))}
       </div>
       <div className="side-menu">
-        <ul>
-          {sideMenuData.map((item) => (
-            <li key={item.id}>{item.name}</li> // Предполагается, что у каждого объекта есть свойство `name`
-          ))}
-        </ul>
+        {sideMenuItems.map(item => (
+          <div key={item.id}>
+            <strong>{item.title}</strong>
+            <p>{item.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

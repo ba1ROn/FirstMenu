@@ -1,47 +1,53 @@
-/* src/App.css */
-
-body {
-  margin: 0;
+/* Основной контейнер */
+div {
   font-family: Arial, sans-serif;
 }
 
-.menu {
+/* Верхнее меню */
+.top-menu {
   display: flex;
+  background: #333;
+  padding: 1rem;
   justify-content: flex-start;
-  padding: 10px;
-  background-color: #333; /* Цвет фона для меню */
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000; /* Убедитесь, что меню находится выше другого содержимого */
+  border-bottom: 2px solid #444;
 }
 
-.menu-button {
-  background-color: #555; /* Цвет фона кнопок */
-  color: white;
+.top-menu button {
+  position: relative; /* Относительное позиционирование для кнопки */
+  color: #fff;
+  background: #555;
   border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  margin: 0 5px;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
   cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
-.menu-button:hover {
-  background-color: #777; /* Цвет кнопок при наведении */
+.top-menu button:hover {
+  background: #666;
 }
 
-.side-menu {
-  margin-top: 60px; /* Отступ сверху, чтобы контент не перекрывал меню */
-  padding: 10px;
+/* Всплывающая подсказка */
+.top-menu button::after {
+  content: attr(title); /* Отображаем текст из атрибута title */
+  position: absolute;
+  bottom: -2rem; /* Располагаем подсказку ниже кнопки */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  font-size: 0.8rem;
+  z-index: 10; /* Убедитесь, что подсказка поверх других элементов */
 }
 
-.side-menu ul {
-  list-style: none;
-  padding: 0;
+.top-menu button:hover::after {
+  opacity: 1;
+  visibility: visible;
 }
 
-.side-menu li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
