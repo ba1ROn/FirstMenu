@@ -6,31 +6,29 @@ const App = () => {
   const [sideMenuItems, setSideMenuItems] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
-  // Функция для загрузки данных верхнего меню
+  // Загрузка данных верхнего меню
   useEffect(() => {
     fetch('http://localhost:5000/api/Menu/mainmenu')
       .then(response => response.json())
-      .then(data => setTopMenuItems(data))}, []);
+      .then(data => setTopMenuItems(data))
+      .catch(error => console.error('Error fetching top menu items:', error));
+  }, []);
 
-  // Функция для обработки кликов по верхнему меню
-  const handleTopMenuClick = (id) => {
-    setSelectedId(id); // Установите выбранный ID
+  // Загрузка данных бокового меню при изменении selectedId
+  useEffect(() => {
+    if (selectedId === null) return;
 
     fetch('http://localhost:5000/api/Menu/getSubMenu', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Accept': '*/*'
       },
-      body: JSON.stringify({ parentID: id }) // Отправляем данные в теле запроса
+      body: JSON.stringify({ parentID: selectedId }) // Отправляем ID в теле запроса
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => setSideMenuItems(data)) };
+      .then(response => response.json())
+      .then(data => setSideMenuItems(data))
+      .catch(error => console.error('Error fetching side menu items:', error));
+  }, [selectedId]);
 
   return (
     <div>
@@ -38,8 +36,8 @@ const App = () => {
         {topMenuItems.map(item => (
           <button
             key={item.id}
-            onClick={() => handleTopMenuClick(item.id)}
-            title={item.description}  // Добавьте описание как всплывающую подсказку
+            onClick={() => setSelectedId(item.id)}
+            title={item.description}  // Всплывающая подсказка
           >
             {item.name}
           </button>
