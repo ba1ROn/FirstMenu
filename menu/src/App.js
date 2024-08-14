@@ -1,56 +1,60 @@
 import React, { useState, useEffect } from 'react';
-import './Style.css';  // Импортируйте CSS файл
+import './Style.css';  
 
 const App = () => {
   const [topMenuItems, setTopMenuItems] = useState([]);
   const [sideMenuItems, setSideMenuItems] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
 
-  // Загрузка данных верхнего меню
+
   useEffect(() => {
     fetch('http://localhost:5000/api/Menu/mainmenu')
       .then(response => response.json())
-      .then(data => setTopMenuItems(data))
-      .catch(error => console.error('Error fetching top menu items:', error));
-  }, []);
+      .then(data => {setTopMenuItems(data)})},[]);
 
-  // Загрузка данных бокового меню при изменении selectedId
-  useEffect(() => {
-    if (selectedId === null) return;
+
+  const handleTopMenuClick = (id) => {
+    setSelectedId(id); 
 
     fetch('http://localhost:5000/api/Menu/getSubMenu', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/json' 
       },
-      body: JSON.stringify({ parentID: selectedId }) // Отправляем ID в теле запроса
+      body: JSON.stringify({ id: id }) 
     })
-      .then(response => response.json())
-      .then(data => setSideMenuItems(data))
-      .catch(error => console.error('Error fetching side menu items:', error));
-  }, [selectedId]);
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => { setSideMenuItems(data)})
+  };
 
   return (
-    <div>
+    <div className="container">
       <div className="top-menu">
         {topMenuItems.map(item => (
           <button
             key={item.id}
-            onClick={() => setSelectedId(item.id)}
-            title={item.description}  // Всплывающая подсказка
-          >
+            onClick={() => handleTopMenuClick(item.id)}
+            title={item.description}>
             {item.name}
           </button>
         ))}
       </div>
-      <div className="side-menu">
-        {sideMenuItems.map(item => (
-          <div key={item.id}>
-            <strong>{item.title}</strong>
-            <p>{item.description}</p>
-          </div>
-        ))}
-      </div>
+      <div className={`side-menu ${selectedId ? 'visible' : ''}`}>
+  {sideMenuItems.map(item => (
+    <button
+      key={item.id}
+      title={item.description}
+    >
+      {item.title}
+    </button>
+  ))}
+    </div>
     </div>
   );
 };

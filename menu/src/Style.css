@@ -1,53 +1,93 @@
-/* Основной контейнер */
-div {
+
+body {
   font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* Верхнее меню */
+.container {
+  display: flex;
+}
+
 .top-menu {
   display: flex;
-  background: #333;
-  padding: 1rem;
-  justify-content: flex-start;
-  border-bottom: 2px solid #444;
+  background-color: #333;
+  padding: 10px;
+  flex: 1; 
 }
 
 .top-menu button {
-  position: relative; /* Относительное позиционирование для кнопки */
+  background-color: #555;
   color: #fff;
-  background: #555;
   border: none;
-  padding: 0.5rem 1rem;
-  margin: 0 0.5rem;
+  padding: 10px 20px;
+  margin-right: 10px;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 5px;
+  position: relative;
   transition: background-color 0.3s ease;
 }
 
 .top-menu button:hover {
-  background: #666;
+  background-color: #777;
 }
 
-/* Всплывающая подсказка */
-.top-menu button::after {
-  content: attr(title); /* Отображаем текст из атрибута title */
-  position: absolute;
-  bottom: -2rem; /* Располагаем подсказку ниже кнопки */
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
+.side-menu {
+  background-color: #444;
   color: #fff;
-  padding: 0.5rem;
-  border-radius: 4px;
+  border: none;
+  padding: 10px;
+  width: 250px; 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column; 
+}
+
+.side-menu.visible {
+  transform: translateX(0); 
+}
+
+.side-menu button {
+  background-color: #555;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.side-menu button:hover {
+  background-color: #777;
+}
+
+
+.top-menu button::after,
+.side-menu button::after {
+  content: attr(title);
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 12px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease;
-  font-size: 0.8rem;
-  z-index: 10; /* Убедитесь, что подсказка поверх других элементов */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-.top-menu button:hover::after {
+.top-menu button:hover::after,
+.side-menu button:hover::after {
   opacity: 1;
   visibility: visible;
 }
-
