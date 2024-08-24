@@ -18,18 +18,18 @@ body {
 .top-menu button {
   background-color: #555;
   color: #fff;
-  border: 2px solid transparent; /* Сделайте цвет рамки прозрачным по умолчанию */
+  border: 2px solid transparent; 
   padding: 10px 20px;
   margin-right: 10px;
   cursor: pointer;
   border-radius: 5px;
-  position: relative; /* Добавлено для тултипов */
+  position: relative; 
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .top-menu button.active {
-  background-color: #777; /* Цвет для активной кнопки */
-  border-color: #fff; /* Цвет рамки для активной кнопки */
+  background-color: #777;
+  border-color: #fff; 
 }
 
 .top-menu button:hover {
@@ -41,9 +41,9 @@ body {
   color: #fff;
   padding: 10px;
   width: 250px;
-  position: fixed; /* Изменено на fixed для плавного скрытия */
+  position: fixed; 
   top: 0;
-  right: -250px; /* Скрываем за экраном */
+  right: -250px; 
   bottom: 0;
   transition: right 0.3s ease;
   display: flex;
@@ -51,18 +51,18 @@ body {
 }
 
 .side-menu.visible {
-  right: 0; /* Показываем боковое меню */
+  right: 0; 
 }
 
 .side-menu button {
   background-color: #555;
   color: #fff;
-  border: 2px solid transparent; /* Сделайте цвет рамки прозрачным по умолчанию */
+  border: 2px solid transparent; 
   padding: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   border-radius: 5px;
-  position: relative; /* Добавлено для тултипов */
+  position: relative; 
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
@@ -70,13 +70,13 @@ body {
   background-color: #666;
 }
 
-/* Стили для тултипов */
+/*тултип */
 .top-menu button::after,
 .side-menu button::after {
   content: attr(title);
   position: absolute;
   left: 50%;
-  top: 100%; /* Тултип теперь снизу кнопки */
+  top: 100%; 
   transform: translateX(-50%);
   background-color: #333;
   color: #fff;
@@ -85,8 +85,8 @@ body {
   font-size: 12px;
   opacity: 0;
   visibility: hidden;
-  white-space: nowrap; /* Предотвращает перенос текста */
-  z-index: 1000; /* Отображение поверх других элементов */
+  white-space: nowrap; 
+  z-index: 1000; 
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
